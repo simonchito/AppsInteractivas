@@ -1,34 +1,40 @@
 <p>car-list works!</p>
 
 <table>
-    <thead><tr>
-        <td>
-            Plate
-        </td>
-    </tr></thead>
+    <thead>
+        <tr>
+            <td>Plate</td>
+        </tr>
+    </thead>
     <tbody>
         <tr *ngFor="let car of cars">
-            <td>
-                {{car.plate}}
-            </td>
-            <td>
-                <button (click)="view (ver,car)">View</button>
-            </td>
+            <td>{{car.plate}}</td>
+            <td><button (click)="view(ver,car)">View</button></td>
             <td><button (click)="delete (car.id )">X</button></td>
-
         </tr>
     </tbody>
+    <tfoot>
+        <td><input [(ngModel)] = "plate" placeholder="plate" name = "plate"></td>
+        <button (click)='add()' class="addCar" >+</button>
+    </tfoot>
 </table>
+
 <ng-template #ver let-modal>
     <div>
-        <button  (click)="modal.dismiss()"> Guardar</button>
+        <h2>Modificar AUTO</h2>
+        <button  (click)="modal.dismiss()">X</button>
     </div>
     <div>
-        <label>Plate:</label>
-        <input [(ngModel)] = "inputPlate" type="text"  >
+        <table>
+            <tbody>
+                <tr>
+                    <td><input [(ngModel)] = "inputPlate" type="text" placeholder="Plate" ></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div>
-        <button (click)="modal.close()">Cerrar</button>
+        <button (click)="modal.close()">Guardar</button>
     </div>
 </ng-template>
 

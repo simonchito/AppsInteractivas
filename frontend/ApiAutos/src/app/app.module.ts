@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

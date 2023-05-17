@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car';
-import {NgbModal} from '@ng-bootstrap/ng'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-car-list',
@@ -10,7 +10,7 @@ import {NgbModal} from '@ng-bootstrap/ng'
 })
 export class CarListComponent {
 
-  constructor (private carService : CarService){}
+  constructor (private carService : CarService, private modalService :NgbModal){}
   public cars : Car[] = []
 
   inputPlate = ""
@@ -25,23 +25,22 @@ export class CarListComponent {
     }, error => {alert ("No se pudieron obtener los autos")})
   }
 
-
   view (ver: any, car : Car){
     this.inputPlate = car.plate
 
     this.modalService.open(ver).result.then(() => {
-      if (this.inputPlate.trim() !== '')
-
       let car = new Car()
-      car.id = this.inputPlate
-      this.carService.edit(car).suscribe( () => {
+      car.plate = this.inputPlate
+      this.carService.edit(car, car.id).subscribe(() => {
         location.reload()
-      }, error => {
+        alert("Alta Exitosa")
+        location.reload
+      }, error =>{
         console.error(error)
-        alert ('Error: '+ error.error.message)
       })
     })
-  }
+    }
+
 
   delete (id : number){
     this.carService.delete(id).subscribe (() =>{
@@ -54,8 +53,14 @@ export class CarListComponent {
 
   add () {
     let car = new Car()
-    
-
+    car.plate = this.plate
+    this.carService.add(car).subscribe(() =>{
+      location.reload()
+      alert("Alta exitosa")
+      location.reload
+    }, error =>{
+      console.error(error)
+    })
   }
 
 
