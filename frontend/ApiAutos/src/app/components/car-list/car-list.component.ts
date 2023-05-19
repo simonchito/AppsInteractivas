@@ -15,7 +15,8 @@ export class CarListComponent {
 
   inputPlate = ""
   plate = ""
-
+  id : number
+  inputId :number
 
 
 
@@ -27,10 +28,12 @@ export class CarListComponent {
 
   view (ver: any, car : Car){
     this.inputPlate = car.plate
+    this.inputId = car.id
 
     this.modalService.open(ver).result.then(() => {
       let car = new Car()
       car.plate = this.inputPlate
+      car.id = this.inputId
       this.carService.edit(car, car.id).subscribe(() => {
         location.reload()
         alert("Alta Exitosa")
