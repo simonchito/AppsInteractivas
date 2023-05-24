@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CarService } from 'src/app/services/car.service';
 import { Car } from 'src/app/models/car';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup,   FormControl, Validators, ValidationErrors } from '@angular/forms';
+
 
 @Component({
   selector: 'app-car-list',
@@ -13,31 +15,47 @@ export class CarListComponent {
   constructor (private carService : CarService, private modalService :NgbModal){}
   public cars : Car[] = []
 
-  inputPlate = ""
-  plate = ""
+
+  car = new Car
+  carForm : FormGroup
+  
+  //plate = ""
   id : number
-  inputId :number
+  
+  //Auxiliares:
+  inputId: number
+  inputPlate = ""
 
 
-
-  ngOnInit() : void{
+  getCars() {
     this.carService.getAll().subscribe(response => {
       this.cars = response 
     }, error => {alert ("No se pudieron obtener los autos")})
   }
 
-  view (ver: any, car : Car){
-    this.inputPlate = car.plate
-    this.inputId = car.id
 
+  ngOnInit() : void{  
+    this.car.plate = ''
+    this.carForm = new FormGroup({
+      'plate' : new FormControl(this.car.plate, { validators: [Validators.required],updateOn: 'blur' })})
+    this.getCars()
+  }
+
+  get plate(){return this.carForm.get('plate')}
+
+
+  view (ver: any, car : Car){
+    this.inputId = car.id
+    this.inputPlate = car.plate
+    
     this.modalService.open(ver).result.then(() => {
       let car = new Car()
-      car.plate = this.inputPlate
       car.id = this.inputId
+      car.plate = this.inputPlate
       this.carService.edit(car, car.id).subscribe(() => {
-        location.reload()
         alert("Alta Exitosa")
-        location.reload
+        this.getCars()
+        //location.reload
       }, error =>{
         console.error(error)
       })
@@ -47,24 +65,27 @@ export class CarListComponent {
 
   delete (id : number){
     this.carService.delete(id).subscribe (() =>{
-      location.reload()
       alert ("Baja exitosa")
+      this.getCars()
     }, error =>{
       console.error(error)
     })
   }
 
   add () {
+    if (
+      this.carForm.invalid
+    ){
+      alert ('campo vacio')
+      return
+    }
     let car = new Car()
-    car.plate = this.plate
+    car.plate = this.plate.value
     this.carService.add(car).subscribe(() =>{
-      location.reload()
+      this.getCars()
       alert("Alta exitosa")
-      location.reload
     }, error =>{
       console.error(error)
     })
   }
-
-
 }

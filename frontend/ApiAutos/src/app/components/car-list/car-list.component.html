@@ -1,24 +1,24 @@
-<p>car-list works!</p>
 
-<table>
+<table class= "table table-striped">
     <thead>
         <tr>
-            <td>Plate</td>
+            <td>Plates</td>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let car of cars">
             <td>{{car.plate}}</td>
             <td><button (click)="view(ver,car)">View</button></td>
-            <td><button (click)="delete (car.id )">X</button></td>
+            <td><button (click)="delete (car.id )">Delete</button></td>
         </tr>
-    </tbody>
-    <tfoot>
-        <td><input [(ngModel)] = "plate" placeholder="plate" name = "plate"></td>
-        <button (click)='add()' class="addCar" >+</button>
-    </tfoot>
 </table>
+<form [formGroup]="carForm">
+    <table>
+        <input formControlName="plate" placeholder="Plate">
+        <button (click)="add()" class="addCar">Add</button>
+    </table>
 
+</form>
 <ng-template #ver let-modal>
     <div>
         <h2>Modificar AUTO</h2>
@@ -28,7 +28,10 @@
         <table>
             <tbody>
                 <tr>
-                    <td><input [(ngModel)] = "inputPlate" type="text" placeholder="Plate" ></td>
+                    <td>
+                        <input formControlName = "inputPlate" type="text" placeholder="Plate" >
+                    </td>
+
                 </tr>
             </tbody>
         </table>
@@ -37,4 +40,3 @@
         <button (click)="modal.close()">Guardar</button>
     </div>
 </ng-template>
-

@@ -23,7 +23,7 @@ export class CarService {
         return this.http.post(this.url,car)
     }
     edit(car: Car, id : number) : Observable <any>{
-        return this.http.post(this.url + '/' + car.id + '/update', car)
+        return this.http.post(this.url + '/' + id + '/update', car)
     }
 
 }
