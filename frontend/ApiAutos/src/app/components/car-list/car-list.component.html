@@ -9,34 +9,43 @@
         <tr *ngFor="let car of cars">
             <td>{{car.plate}}</td>
             <td><button (click)="view(ver,car)">View</button></td>
-            <td><button (click)="delete (car.id )">Delete</button></td>
+            <td><button (click)="delete(car.id )">Delete</button></td>
         </tr>
+    </tbody>
 </table>
 <form [formGroup]="carForm">
-    <table>
-        <input formControlName="plate" placeholder="Plate">
-        <button (click)="add()" class="addCar">Add</button>
+    <table  class= "table table-striped" > 
+        <tbody>
+            <input formControlName="plate" placeholder="Plate">
+            <select formControlName="driver">
+                <option *ngFor="let driver of drivers" [ngValue]="driver.driver_id">{{driver.name}}</option>
+            </select>
+            <button (click)="add()" class="addCar">Add</button>
+        </tbody>
     </table>
-
 </form>
+
 <ng-template #ver let-modal>
     <div>
         <h2>Modificar AUTO</h2>
-        <button  (click)="modal.dismiss()">X</button>
     </div>
     <div>
-        <table>
+        <table class= "table table-striped">
             <tbody>
                 <tr>
                     <td>
                         <input formControlName = "inputPlate" type="text" placeholder="Plate" >
-                    </td>
 
+                    </td>
+                    <td>
+                        <button (click)="modal.close()">Save</button>
+                        
+                    </td>
+                    <td>
+                        <button  (click)="modal.dismiss()">Exit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div>
-        <button (click)="modal.close()">Guardar</button>
     </div>
 </ng-template>

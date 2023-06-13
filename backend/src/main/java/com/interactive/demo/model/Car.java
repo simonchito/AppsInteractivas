@@ -20,7 +20,6 @@ public class Car {
     private String plate;
 
     @OneToMany(mappedBy = "car" )
-    @JsonIgnore
     private List<Driver> driversList;
 
     public Car(String plate) {

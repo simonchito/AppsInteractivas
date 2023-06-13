@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping ("/driver")
+@CrossOrigin("*")
 public class DriverController {
     @Autowired
     private DriverService driverService;

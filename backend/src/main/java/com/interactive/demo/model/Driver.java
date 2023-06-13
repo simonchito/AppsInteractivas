@@ -1,9 +1,11 @@
 package com.interactive.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Data
@@ -17,7 +19,8 @@ public class Driver {
     public Driver(){
 
     }
-
+    @NotNull
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;

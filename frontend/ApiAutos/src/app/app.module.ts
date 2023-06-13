@@ -5,13 +5,15 @@ import { CarListComponent } from './components/car-list/car-list.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DriverListComponent } from './components/driver-list/driver-list.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CarListComponent
+    CarListComponent,
+    DriverListComponent
   ],
   imports: [
     BrowserModule,
